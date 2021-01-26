@@ -1,20 +1,25 @@
 const express = require("express");
-const { data } = require("./data.js");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const { productRouter } = require("./routers/productRouter.js");
+const { userRouter } = require("./routers/userRouter.js");
+const { orderRouter } = require("./routers/orderRouter.js");
+
+dotenv.config();
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.get("/api/products/:id", (req, res) => {
-  const product = data.products.find((x) => x._id == req.params.id);
-  if (product) {
-    res.send(product);
-  } else {
-    res.status(404).send({ message: "Product not found" });
-  }
+mongoose.connect("mongodb://localhost/shopify", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
 });
 
-app.get("/api/products", (req, res) => {
-  res.send(data.products);
-});
+app.use("/api/users", userRouter);
+app.use("/api/products", productRouter);
+app.use("/api/orders", orderRouter);
 
 app.get("/", (req, res) => {
   res.send("Server is ready");

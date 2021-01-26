@@ -1,7 +1,21 @@
+const bycrypt = require("bcrypt");
 const data = {
+  users: [
+    {
+      name: "admin",
+      email: "admin@shopify.com",
+      password: bycrypt.hashSync("admin", 8),
+      isAdmin: true,
+    },
+    {
+      name: "derek",
+      email: "derek@shopify.com",
+      password: bycrypt.hashSync("derek", 8),
+      isAdmin: false,
+    },
+  ],
   products: [
     {
-      _id: 0,
       name: "Nike Slim Shirts",
       category: "shirts",
       image: "/images/p1.jpg",
@@ -13,7 +27,6 @@ const data = {
       description: "Hig quality shirts",
     },
     {
-      _id: 1,
       name: "Nike Shirts",
       category: "shirts",
       image: "/images/p2.jpg",
@@ -25,7 +38,6 @@ const data = {
       description: "Hig quality shirts",
     },
     {
-      _id: 2,
       name: "Nike Slim Shirts",
       category: "shirts",
       image: "/images/p3.jpg",
@@ -37,7 +49,6 @@ const data = {
       description: "Hig quality shirts",
     },
     {
-      _id: 3,
       name: "Nike Slim Shirts",
       category: "shirts",
       image: "/images/p4.jpg",
@@ -49,7 +60,6 @@ const data = {
       description: "Hig quality shirts",
     },
     {
-      _id: 4,
       name: "Nike Slim Shirts",
       category: "shirts",
       image: "/images/p5.jpg",

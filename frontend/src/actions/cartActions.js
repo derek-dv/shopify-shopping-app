@@ -1,5 +1,11 @@
 import Axios from "axios";
-import { ADD_TO_CART, GET_CART_LIST, REMOVE_FROM_CART } from "./types";
+import {
+  ADD_TO_CART,
+  CART_SAVE_PAYMENT_METHOD,
+  CART_SAVE_SHIPPING_ADDRESS,
+  GET_CART_LIST,
+  REMOVE_FROM_CART,
+} from "./types";
 
 export const addToCart = (id, qty) => (dispatch, getState) => {
   Axios.get(`/api/products/${id}`)
@@ -39,4 +45,13 @@ export const removeCart = (id) => (dispatch, getState) => {
     payload: id,
   });
   localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
+};
+
+export const saveShippingAddress = (data) => (dispatch, getState) => {
+  dispatch({ type: CART_SAVE_SHIPPING_ADDRESS, payload: data });
+  localStorage.setItem("shippingAddress", JSON.stringify(data));
+};
+
+export const savePaymentMethod = (data) => (dispatch) => {
+  dispatch({ type: CART_SAVE_PAYMENT_METHOD, payload: data });
 };
