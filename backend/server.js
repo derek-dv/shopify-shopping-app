@@ -1,9 +1,9 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-const { productRouter } = require("./routers/productRouter.js");
-const { userRouter } = require("./routers/userRouter.js");
-const { orderRouter } = require("./routers/orderRouter.js");
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import productRouter from "./routers/productRouter";
+import userRouter from "./routers/userRouter.js";
+import orderRouter from "./routers/orderRouter.js";
 
 dotenv.config();
 
@@ -27,5 +27,6 @@ app.get("/", (req, res) => {
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
+  console.log(process.env);
   console.log(`listen at localhost:${port}`);
 });

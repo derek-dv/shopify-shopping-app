@@ -1,6 +1,6 @@
-const express = require("express");
-const { data } = require("../data");
-const { Product } = require("../models/productModel");
+import express from "express";
+import { data } from "../data";
+import Product from "../models/productModel";
 
 const productRouter = express.Router();
 
@@ -23,4 +23,4 @@ productRouter.get("/:id", async (req, res) => {
   }
 });
 
-module.exports.productRouter = productRouter;
+export default productRouter;

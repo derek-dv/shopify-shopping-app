@@ -1,5 +1,5 @@
-const bycrypt = require("bcrypt");
-const data = {
+import bycrypt from "bcrypt";
+export const data = {
   users: [
     {
       name: "admin",
@@ -73,4 +73,3 @@ const data = {
   ],
 };
 
-module.exports.data = data;

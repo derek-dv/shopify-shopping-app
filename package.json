@@ -5,7 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --watch backend --experimental-modules backend/server.js"
+    "start": "nodemon --watch backend --experimental-modules --experimental-specifier-resolution=node backend/server.js"
   },
   "keywords": [],
   "author": "",
