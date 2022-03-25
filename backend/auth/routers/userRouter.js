@@ -1,6 +1,6 @@
 import express from "express";
 import bcrypt from "bcrypt";
-import { data } from "../data";
+import { data } from "../../data";
 import User from "../models/userModel";
 import { generateToken } from "../utils";
 import expressAsyncHandler from "express-async-handler";
@@ -36,19 +36,25 @@ userRouter.post(
 userRouter.post(
   "/register",
   expressAsyncHandler(async (req, res) => {
-    const user = new User({
-      name: req.body.name,
-      email: req.body.email,
-      password: bcrypt.hashSync(req.body.password, 8),
-    });
-    const createdUser = await user.save();
-    res.send({
-      _id: createdUser._id,
-      name: createdUser.name,
-      email: createdUser.email,
-      isAdmin: createdUser.isAdmin,
-      token: generateToken(createdUser),
-    });
+    const { name, email, password } = req.body;
+    if (name && email && password) {
+      const user = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, 8),
+      });
+      const createdUser = await user.save();
+      res.send({
+        _id: createdUser._id,
+        name: createdUser.name,
+        email: createdUser.email,
+        isAdmin: createdUser.isAdmin,
+        token: generateToken(createdUser),
+      });
+    } else
+      res
+        .status(401)
+        .json({ error: true, data: { message: "Please provide all fields" } });
   })
 );
 
