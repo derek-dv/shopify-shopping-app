@@ -5,7 +5,6 @@ export default function download(fileKey) {
   const bucketName = "shopit-products";
   //k
   const S3 = new AWS.S3({
-    region: "us-east-1",
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
     secretAccessKey: process.env.AWS_SECRET_KEY,
     Bucket: bucketName,
