@@ -1,6 +1,6 @@
 FROM node:latest
 
 WORKDIR /app
-RUN npm init
 COPY . /app`
+RUN npm install
 CMD npm run dev

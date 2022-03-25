@@ -105,4 +105,11 @@ productRouter.get("/:id", async (req, res) => {
   }
 });
 
+//delete by ID
+
+productRouter.delete("/:id", async (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+});
+
 export default productRouter;
