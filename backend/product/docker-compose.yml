@@ -3,9 +3,6 @@ services:
   mongodb:
     image: mongo:5.0.2
     restart: unless-stopped
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=12345
     ports:
       - 6868:8080
     volumes:
@@ -17,12 +14,6 @@ services:
     restart: unless-stopped
     ports:
       - 7017:27017
-    environment:
-      - DB_HOST=mongodb
-      - DB_USER=root
-      - DB_PASSWORD=12345
-      - DB_NAME=derek
-      - DB_PORT=27017
     stdin_open: true
     tty: true
 volumes:
