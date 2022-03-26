@@ -1,10 +1,31 @@
-version: '3.8'
+version: "3.8"
 services:
-  backend:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  mongodb:
+    image: mongo:5.0.2
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=derek
+      - MONGO_INITDB_ROOT_PASSWORD=derek
     ports:
-      - 5000:5000
+      - 6868:8080
     volumes:
-      - .:/app
+      - db:/data/db
+  app:
+    depends_on:
+      - mongodb
+    build: .
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - 7017:27017
+    environment:
+      - DB_HOST=mongodb
+      - DB_USER=derek
+      - DB_PASSWORD=derek
+      - DB_NAME=derek
+      - DB_PORT=27017
+    stdin_open: true
+    tty: true
+volumes:
+  db:

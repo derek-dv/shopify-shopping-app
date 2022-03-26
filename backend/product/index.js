@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
   res.send("products is ready");
 });
 
-const port = process.env.PORT || 5000;
+const port = process.env.NODE_DOCKER_PORT || 5000;
 app.listen(port, () => {
   console.log(`listen at localhost:${port}`);
 });
