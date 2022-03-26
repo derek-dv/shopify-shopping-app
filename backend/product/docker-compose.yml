@@ -4,7 +4,7 @@ services:
     image: mongo:5.0.2
     restart: unless-stopped
     ports:
-      - 6868:8080
+      - 7017:27017
     volumes:
       - db:/data/db
   app:
@@ -13,7 +13,7 @@ services:
     build: .
     restart: unless-stopped
     ports:
-      - 7017:27017
+      - 6868:8080
     stdin_open: true
     tty: true
 volumes:
