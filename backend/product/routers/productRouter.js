@@ -1,8 +1,13 @@
 import express from "express";
+import fs from "fs";
+import util from "util";
+import { validate } from "../controllers/product";
 import download from "../lib/download";
 import awsUpload, { multerUpload } from "../lib/upload";
 import Product from "../models/productModel";
 import { isAuth } from "../utils.js";
+
+const unlinkFile = util.promisify(fs.unlink);
 
 const productRouter = express.Router();
 
@@ -24,6 +29,7 @@ productRouter.post(
   "/",
   [isAuth, multerUpload.single("img")],
   async (req, res) => {
+    validate();
     console.log(req.body.name);
     console.log(req.file);
     const {
@@ -46,6 +52,7 @@ productRouter.post(
     ) {
       try {
         const result = await awsUpload(req.file);
+        await unlinkFile(req.file.path);
         const image = { url: `/image/${result.Key}`, key: result.Key };
         const product = new Product({
           name,
@@ -68,7 +75,7 @@ productRouter.post(
   }
 );
 
-productRouter.put("/:id", isAuth, async (req, res) => {
+productRouter.put("/:id", async (req, res) => {
   const id = req.params.id;
   const body = req.body;
   const temp = await Product.findById(id);
@@ -95,6 +102,38 @@ productRouter.put("/:id", isAuth, async (req, res) => {
       .status(401)
       .json({ error: true, data: { message: "Product with ID not found" } });
 });
+
+//add image
+
+productRouter.post(
+  "/image/:id",
+  multerUpload.single("img"),
+  async (req, res) => {
+    const product = await Product.findById(req.params.id);
+    if (product) {
+      try {
+        const result = await awsUpload(req.file);
+        await unlinkFile(req.file.path);
+        const image = { url: `/image/${result.Key}` };
+
+        const updatedProduct = await Product.findByIdAndUpdate(
+          req.params.id,
+          {
+            image: [...product.image, image],
+          },
+          { new: true }
+        );
+        res.status(203).json({ error: false, data: { updatedProduct } });
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      res
+        .status(400)
+        .json({ error: true, data: { message: "Product does not exist" } });
+    }
+  }
+);
 
 productRouter.get("/:id", async (req, res) => {
   const product = await Product.findById(req.params.id);
