@@ -1,20 +1,23 @@
 version: "3.8"
 services:
   mongodb:
-    image: mongo:5.0.2
+    image: mongo:4.4
     restart: unless-stopped
     ports:
       - 7017:27017
     volumes:
       - db:/data/db
   app:
+    volumes:
+      - .:/app
     depends_on:
       - mongodb
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     restart: unless-stopped
     ports:
       - 6868:8080
-    stdin_open: true
-    tty: true
+
 volumes:
   db:
