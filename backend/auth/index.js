@@ -11,19 +11,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 
-mongoose.connect('mongodb://mongodb', {
+mongoose.connect('mongodb://auth_mongodb', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
 });
 
-app.use("/api/users", userRouter);
+app.use("/", userRouter);
 
-app.get("/", (req, res) => {
-  res.send("User is ready");
-});
-
-const port = process.env.PORT || 8080;
+const port = 6867//process.env.PORT || 8080;
 app.listen(port, () => {
   console.log(`listen at localhost:${port}`);
 });

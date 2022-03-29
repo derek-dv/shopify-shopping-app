@@ -7,7 +7,7 @@ const register = [
   registerValidator,
   async (req, res) => {
     const errors = validationResult(req);
-    if (errors.isEmpty())
+    if (!errors.isEmpty())
       res.status(422).json({ error: true, data: errors.array() });
     else {
       const exists = await User.exists({ email: req.body.email });
