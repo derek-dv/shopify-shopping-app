@@ -1,0 +1,49 @@
+version: "3.8"
+services:
+  auth_mongodb:
+    image: mongo:4.4
+    restart: unless-stopped
+    ports:
+      - "7070:27017"
+    volumes:
+      - ./auth_db:/data/auth_db
+
+  product_mongodb:
+    image: mongo:4.4
+    restart: unless-stopped
+    ports:
+      - "7071:27018"
+    volumes:
+      - ./product_db:/data/product_db
+
+  auth:
+    build:
+      context: ./auth
+      dockerfile: Dockerfile
+    ports:
+      - "6867:6867"
+    volumes:
+      - ./auth/.:/auth
+    depends_on:
+      - auth_mongodb
+
+  products:
+    build:
+      context: ./product
+      dockerfile: Dockerfile
+    volumes:
+      - ./product/.:/product
+    ports:
+      - "6868:6868"
+    depends_on:
+      - product_mongodb
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - auth
+      - products

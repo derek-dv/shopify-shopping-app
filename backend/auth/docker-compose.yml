@@ -7,7 +7,7 @@ services:
       - 7017:27017
     volumes:
       - db:/data/db
-  app:
+  auth:
     volumes:
       - .:/app
     depends_on:
