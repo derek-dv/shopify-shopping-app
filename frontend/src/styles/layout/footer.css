@@ -1,0 +1,16 @@
+.footer {
+  width: 100%;
+  text-align: center;
+  background-color: #2b2bf7;
+  display: flex;
+  flex-direction: column;
+}
+
+.footer a {
+  padding: 0 0.24rem;
+}
+
+.footer a, .footer p {
+  gap: 0.5rem;
+  color: #fff;
+}

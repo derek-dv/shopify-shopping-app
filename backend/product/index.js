@@ -19,11 +19,7 @@ mongoose
     useCreateIndex: true,
   })
   .then(() => {
-    app.use("/api", productRouter);
-
-    app.get("/", (req, res) => {
-      res.send("products is ready");
-    });
+    app.use("/", productRouter);
 
     const port = 6868// process.env.NODE_DOCKER_PORT || 5000;
     app.listen(port, () => {

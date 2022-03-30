@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-  mongodb:
+  product_mongodb:
     image: mongo:4.4
     restart: unless-stopped
     ports:
@@ -11,13 +11,13 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - mongodb
+      - product_mongodb
     build:
       context: .
       dockerfile: Dockerfile
     restart: unless-stopped
     ports:
-      - 6868:8080
+      - 6868:6868
 
 volumes:
   db:

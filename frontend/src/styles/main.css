@@ -1,0 +1,30 @@
+.app {
+  margin-top: 1rem;
+}
+
+.app > p {
+  min-width: 30ch;
+  font-size: large;
+}
+
+.upload {
+  margin-top: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  background-color: blue;
+  color: #fff;
+  border: 1px solid #000;
+  outline: none;
+  font-size: 1em;
+  font-weight: 300;
+}
+
+.upload:hover{
+  cursor: pointer;
+  background-color: #4444fd;
+}
+
+.react-player {
+  height: 50%;
+  width: 50%;
+  margin: 1rem 0;
+}
